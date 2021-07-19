@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDo Manager</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
+  <!-- <link rel="stylesheet" href="style.css"> -->
+
+</head>
+
+<body class="">
+  <div class="row">
+    <div id="task-input" class="mb-5 mt-5 col-12 col-md-6 mx-auto">
+      <div id="personalizer"></div>
+      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"
+        aria-controls="offcanvasExample">
+        Button with data-bs-target
+      </button>
+      <!-- Trying offcanvas -->
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasLabel">Offcanvas</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div class="card">
+            <div class="card-body">
+              <form id="todo-form">
+                <div class="mb-3">
+                  <label class="form-label">What do you want to do? </label>
+                  <input type="text" name="task" class="form-control" />
+                </div>
+                <div class="mb-3">
+                  <label for="priority" class="form-label">Select a Priority</label>
+                  <select name="priority" id="priority-select" class="form-select">
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                  </select>
+                </div>
+                <button class="btn btn-success">Save Task</button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <div class="">
+      <div class="">
+        <h3 class="text-uppercase text-center">Task List</h3>
+      </div>
+      <!-- <ul id="task-display" class="list-group list-group-flush"></ul> -->
+      <div class="container">
+        <ul id="task-display"
+          class="list-unstyled row row-cols-1 row-cols-xl-2 shadow-lg p-3 mt-3 mb-5 bg-body rounded-3">
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
+  <script src="main.js"></script>
+</body>
+
+</html>
