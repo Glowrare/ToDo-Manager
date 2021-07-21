@@ -218,7 +218,28 @@ function deleteAllTasks(confirmed) {
   }
 }
 
+function deleteDoneTasks(confirmed) {
+  if (confirmed) {
+    todolist = todolist.filter((item) => !item.done);
+    localStorage.setItem("todoDB", JSON.stringify(todolist));
+
+    //Remove all task from the DOM
+    document
+      .querySelectorAll(".text-decoration-line-through.text-muted")
+      .forEach((el) => {
+        el.remove();
+      });
+  }
+}
+
+document.getElementById("clearDoneTasks").addEventListener("click", () => {
+  const confirmation = confirm(
+    "Are you sure you want to delete all items marked as done?"
+  );
+  deleteDoneTasks(confirmation);
+});
+
 document.getElementById("clearAllTasks").addEventListener("click", () => {
-  const confirmation = confirm("Are you sure?");
+  const confirmation = confirm("Are you sure you want to delete all items?");
   deleteAllTasks(confirmation);
 });

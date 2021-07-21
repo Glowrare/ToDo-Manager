@@ -31,7 +31,7 @@
   </header>
   <div id="task-input" class="mb-2 mt-3 mx-auto">
     <div class="container text-center">
-      <div id="personalizer" class=""></div>
+      <div id="personalizer"></div>
     </div>
 
   </div>
@@ -40,9 +40,11 @@
       <h3 class="text-uppercase text-center mb-2">Task List</h3>
     </div>
     <div class="container shadow-lg rounded-3">
-      <div class="pt-4 text-end px-3"><button class="btn btn-outline-danger rounded-0" type="button"
-          id="clearAllTasks">Clear
-          All</button></div>
+      <div class="pt-4 text-end px-3">
+        <button class="btn btn-outline-danger rounded-0 me-3" id="clearDoneTasks">Clear Done</button>
+        <button class="btn btn-outline-danger rounded-0" type="button" id="clearAllTasks">Clear
+          All</button>
+      </div>
       <ul id="task-display" class="list-unstyled row row-cols-1 row-cols-xl-2 p-3 pt-4 mb-5">
 
       </ul>
