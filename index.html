@@ -13,74 +13,80 @@
 
 </head>
 
-<body class="">
-  <header class="bg-dark text-white py-2 text-uppercase text-center">
-    <h1 class="fs-2">ToDo Manager</h1>
+<body>
+  <header class="bg-dark text-white py-2 text-uppercase text-center sticky-top">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-7 text-md-end">
+          <h1 class="fs-2">ToDo Manager</h1>
+        </div>
+        <div class=" text-md-end col-12 col-md-3">
+          <button class="btn btn-outline-success rounded-0 text-white border-white text-nowrap" type="button"
+            data-bs-toggle="offcanvas" data-bs-target="#addNewTask" aria-controls="addNewTaskControl">
+            Add New Task
+          </button>
+        </div>
+      </div>
+    </div>
   </header>
-  <div class="row">
-    <div id="task-input" class="mb-2 mt-5 col-12 col-md-6 mx-auto">
-      <div class="container text-center">
-        <div id="personalizer" class="mb-3"></div>
-      </div>
-      <!-- offcanvas for Add new task form -->
-      <div class="offcanvas offcanvas-start" tabindex="-1" id="addNewTask" aria-labelledby="addNewTaskLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="addNewTaskLabel">Add New Task</h5>
-          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <div class="card rounded-0 shadow-sm">
-            <div class="card-body">
-              <form id="todo-form">
-                <div class="mb-3">
-                  <label class="form-label">What do you want to do? </label>
-                  <input type="text" name="task" class="form-control rounded-0" />
-                  <div class="invalid-feedback">
-                    Task input cannot empty.
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <h6 class="fw-normal">Select Task Priority</h6>
-
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="priority" id="lowPriority" value="low" checked>
-                    <label class="form-check-label" for="lowPriority">Low</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="priority" id="mediumPriority" value="medium">
-                    <label class="form-check-label" for="mediumPriority">Medium</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="priority" id="highPriority" value="high">
-                    <label class="form-check-label" for="highPriority">High</label>
-                  </div>
-                </div>
-                <div class="mt-4"><button class="btn btn-outline-success rounded-0">Add</button></div>
-              </form>
-            </div>
-          </div>
-
-        </div>
-      </div>
+  <div id="task-input" class="mb-2 mt-3 mx-auto">
+    <div class="container text-center">
+      <div id="personalizer" class=""></div>
     </div>
+
   </div>
-  <div class="sticky-top text-center mb-4 bg-body">
-    <button class="btn btn-outline-success rounded-0" type="button" data-bs-toggle="offcanvas"
-      data-bs-target="#addNewTask" aria-controls="addNewTaskControl">
-      Add New Task
-    </button>
-  </div>
-  <div class="">
-    <div class="">
-      <h3 class="text-uppercase text-center">Task List</h3>
+  <div class="mt-5">
+    <div>
+      <h3 class="text-uppercase text-center mb-2">Task List</h3>
     </div>
-    <div class="container shadow-lg rounded-3 mt-4">
+    <div class="container shadow-lg rounded-3">
       <div class="pt-4 text-end px-3"><button class="btn btn-outline-danger rounded-0" type="button"
           id="clearAllTasks">Clear
           All</button></div>
       <ul id="task-display" class="list-unstyled row row-cols-1 row-cols-xl-2 p-3 pt-4 mb-5">
 
       </ul>
+    </div>
+  </div>
+
+  <!-- offcanvas for Add new task form -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="addNewTask" aria-labelledby="addNewTaskLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="addNewTaskLabel">Add New Task</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="card rounded-0 shadow-sm">
+        <div class="card-body">
+          <form id="todo-form">
+            <div class="mb-3">
+              <label class="form-label">What do you want to do? </label>
+              <input type="text" name="task" class="form-control rounded-0" />
+              <div class="invalid-feedback">
+                Task input cannot empty.
+              </div>
+            </div>
+            <div class="mb-3">
+              <h6 class="fw-normal">Select Task Priority</h6>
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="priority" id="lowPriority" value="low" checked>
+                <label class="form-check-label" for="lowPriority">Low</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="priority" id="mediumPriority" value="medium">
+                <label class="form-check-label" for="mediumPriority">Medium</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="priority" id="highPriority" value="high">
+                <label class="form-check-label" for="highPriority">High</label>
+              </div>
+            </div>
+            <div class="mt-4"><button class="btn btn-outline-success rounded-0">Add</button></div>
+          </form>
+        </div>
+      </div>
+
     </div>
   </div>
 
