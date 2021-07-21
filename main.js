@@ -1,25 +1,3 @@
-// function personalizer() {
-//   let display = document.getElementById("personalizer");
-//   if (localStorage.getItem("username")) {
-//     display.innerHTML = `<span>Hello <b>${localStorage.getItem(
-//       "username"
-//     )}</b></span>`;
-//   } else {
-//     let username = document.getElementById("username");
-//     if (!username) {
-//       /*html*/
-//       display.innerHTML = `
-//       <span id="username"> Hey there! What's your name? <input type="text" name="username"/> </span><br>
-//       <button type="button" onclick="personalizer()">Save</button>
-//       `;
-//     } else {
-//       let usernameValue = document.querySelector('[name="username"]').value;
-//       localStorage.setItem("username", usernameValue);
-//       display.innerHTML = `<span>Hello <b>${usernameValue}</b></span>`;
-//     }
-//   }
-// }
-
 let localTodoDatabase = [];
 
 function personalizer() {
@@ -75,20 +53,35 @@ const todoForm = document.getElementById("todo-form");
 
 todoForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const task = document.querySelector('[name="task"]').value;
+  const todoForm = document.getElementById("todo-form");
+  const task = document.querySelector('[name="task"]').value.trim();
   const priority = document.querySelector('[name="priority"]').value;
   const done = false;
-  const taskObject = {
-    task: task,
-    priority: priority,
-    status: done,
-    id: Date.now(),
-  };
-  todolist.push(taskObject);
-  localStorage.setItem("todoDB", JSON.stringify(todolist));
+  if (task === "") {
+    // alert("Task input cannot empty.");
+    document.querySelector('[name="task"]').classList.add("border-danger");
+    document
+      .querySelector("#todo-form .invalid-feedback")
+      .classList.add("d-block");
+  } else {
+    document.querySelector('[name="task"]').classList.remove("border-danger");
+    todoForm.querySelector(".invalid-feedback").classList.remove("d-block");
+    const taskObject = {
+      task: task,
+      priority: priority,
+      status: done,
+      id: Date.now(),
+    };
+    todolist.push(taskObject);
+    localStorage.setItem("todoDB", JSON.stringify(todolist));
 
-  console.log(todolist);
-  displayer(todolist);
+    console.log(todolist);
+    displayer(todolist);
+
+    todoForm.reset();
+
+    // document.getElementById("addNewTask").modal("hide");
+  }
 });
 
 // Display tasks
@@ -111,7 +104,7 @@ function displayer(array, existing = false) {
     </div>
     <div class="col-11">
       <div class="row">
-        <div class="col-11">
+        <div class="col-10">
           <div class="row">
             <div class="col-12 col-md-8">
               <span class="fw-bold text-uppercase">${element.task}</span>
@@ -119,7 +112,7 @@ function displayer(array, existing = false) {
             <div class="col-12 col-md-4"><span class="fst-italic"> Priority is ${element.priority}</span></div>
           </div>
         </div>
-        <div class="col-1"><button onclick="itemDeleter(event)" class="btn-close"></button></div>
+        <div class="col-2"><button onclick="itemDeleter(event)" class="btn-close"></button></div>
       </div>
     </div>
   </div>

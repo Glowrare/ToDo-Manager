@@ -16,15 +16,17 @@
 <body class="">
   <div class="row">
     <div id="task-input" class="mb-5 mt-5 col-12 col-md-6 mx-auto">
-      <div id="personalizer"></div>
-      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"
-        aria-controls="offcanvasExample">
-        Button with data-bs-target
-      </button>
-      <!-- Trying offcanvas -->
-      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+      <div class="container text-center">
+        <div id="personalizer" class="mb-4"></div>
+        <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#addNewTask"
+          aria-controls="addNewTaskControl">
+          Add New Task
+        </button>
+      </div>
+      <!-- offcanvas for Add new task form -->
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="addNewTask" aria-labelledby="addNewTaskLabel">
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasLabel">Offcanvas</h5>
+          <h5 class="offcanvas-title" id="addNewTaskLabel">Add New Task</h5>
           <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -34,6 +36,9 @@
                 <div class="mb-3">
                   <label class="form-label">What do you want to do? </label>
                   <input type="text" name="task" class="form-control" />
+                  <div class="invalid-feedback">
+                    Task input cannot empty.
+                  </div>
                 </div>
                 <div class="mb-3">
                   <label for="priority" class="form-label">Select a Priority</label>
@@ -43,7 +48,7 @@
                     <option>High</option>
                   </select>
                 </div>
-                <button class="btn btn-success">Save Task</button>
+                <button class="btn btn-success">Add</button>
               </form>
             </div>
           </div>
@@ -57,10 +62,10 @@
       <div class="">
         <h3 class="text-uppercase text-center">Task List</h3>
       </div>
-      <!-- <ul id="task-display" class="list-group list-group-flush"></ul> -->
-      <div class="container">
-        <ul id="task-display"
-          class="list-unstyled row row-cols-1 row-cols-xl-2 shadow-lg p-3 mt-3 mb-5 bg-body rounded-3">
+      <div class="container shadow-lg">
+        <div class="pt-4 text-end px-3"><button class="btn btn-danger" type="button" id="clearAllTasks">Clear
+            All</button></div>
+        <ul id="task-display" class="list-unstyled row row-cols-1 row-cols-xl-2 p-3 pt-4 mb-5 bg-body rounded-3">
 
         </ul>
       </div>
