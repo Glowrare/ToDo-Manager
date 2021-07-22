@@ -1,4 +1,49 @@
 let localTodoDatabase = [];
+let todolist = localTodoDatabase;
+
+personalizer();
+
+const todoForm = document.getElementById("todo-form");
+todoForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const task = document.querySelector('[name="task"]').value.trim();
+  const priority = document.querySelector(
+    'input[name="priority"]:checked'
+  ).value;
+
+  if (task === "") {
+    validationError('[name="task"]', todoForm);
+  } else {
+    validationError('[name="task"]', todoForm, false);
+
+    const taskObject = {
+      task: task,
+      priority: priority,
+      done: false,
+      id: Date.now(),
+    };
+
+    todolist.push(taskObject);
+    localStorage.setItem("todoDB", JSON.stringify(todolist));
+
+    console.log(todolist);
+    displayTask(todolist);
+
+    todoForm.reset();
+  }
+});
+
+document.getElementById("clearDoneTasks").addEventListener("click", () => {
+  const confirmation = confirm(
+    "Are you sure you want to delete all items marked as done?"
+  );
+  deleteDoneTasks(confirmation);
+});
+
+document.getElementById("clearAllTasks").addEventListener("click", () => {
+  const confirmation = confirm("Are you sure you want to delete all items?");
+  deleteAllTasks(confirmation);
+});
 
 function personalizer() {
   const display = document.getElementById("personalizer");
@@ -17,6 +62,7 @@ function personalizer() {
         <div class="mb-3">
           <label class="form-label">What is your name?</label>
           <input type="text" class="form-control rounded-0" name="username" />
+          <div class="invalid-feedback"> Name input cannot empty. </div>
         </div>
         <button type="submit" class="btn btn-outline-primary rounded-0" onclick="storeName()">Save</button>
       </div>
@@ -32,61 +78,30 @@ function personalizer() {
       localTodoDatabase = todoDB;
 
       todoDB.forEach((todo) => {
-        displayer(todo, true);
+        displayTask(todo, true);
       });
     }
   }
 }
 
-//Fetch input and store Username to local storage for personalizer
+//Fetch input and store Username to local storage for personalizer + user validator
 function storeName() {
-  const username = document.querySelector('[name="username"]').value;
-  localStorage.setItem("username", username);
-  personalizer();
+  const formWrapper = document.getElementById("personalizer");
+  const username = document
+    .querySelector('[name="username"]')
+    .value.trim()
+    .toUpperCase();
+  if (username === "") {
+    validationError('[name="username"]', formWrapper);
+  } else {
+    validationError('[name="username"]', formWrapper, false);
+    localStorage.setItem("username", username);
+    personalizer();
+  }
 }
 
-personalizer();
-
-// TODO Management Section
-let todolist = localTodoDatabase;
-
-const todoForm = document.getElementById("todo-form");
-
-todoForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const task = document.querySelector('[name="task"]').value.trim();
-  // const priority = document.querySelector('[name="priority"]').value;
-  const priority = document.querySelector(
-    'input[name="priority"]:checked'
-  ).value;
-  // const done = false;
-
-  if (task === "") {
-    document.querySelector('[name="task"]').classList.add("border-danger");
-    todoForm.querySelector(".invalid-feedback").classList.add("d-block");
-  } else {
-    document.querySelector('[name="task"]').classList.remove("border-danger");
-    todoForm.querySelector(".invalid-feedback").classList.remove("d-block");
-
-    const taskObject = {
-      task: task,
-      priority: priority,
-      done: false,
-      id: Date.now(),
-    };
-
-    todolist.push(taskObject);
-    localStorage.setItem("todoDB", JSON.stringify(todolist));
-
-    console.log(todolist);
-    displayer(todolist);
-
-    todoForm.reset();
-  }
-});
-
 // Display tasks
-function displayer(array, existing = false) {
+function displayTask(array, existing = false) {
   const taskDisplay = document.getElementById("task-display");
   const node = document.createElement("li");
   node.setAttribute("class", "mb-3 col");
@@ -132,7 +147,7 @@ function displayer(array, existing = false) {
             <div class="col-12 col-md-4"><span class="fst-italic text-${priorityIndicator}"> Priority is ${element.priority}</span></div>
           </div>
         </div>
-        <div class="col-2 col-sm-1"><button onclick="itemDeleter(event)" class="btn-close"></button></div>
+        <div class="col-2 col-sm-1"><button onclick="deleteTask(event)" class="btn-close"></button></div>
       </div>
     </div>
   </div>
@@ -140,19 +155,6 @@ function displayer(array, existing = false) {
   `;
 
   taskDisplay.prepend(node);
-}
-
-// Delete tasks
-function itemDeleter(e) {
-  const confirmation = confirm("Are you sure?");
-  if (confirmation) {
-    const parentEl = e.target.closest(".list-item-content");
-    let parentID = parentEl.getAttribute("id");
-    parentID = parseInt(parentID);
-    todolist = todolist.filter((e) => e.id !== parentID);
-    localStorage.setItem("todoDB", JSON.stringify(todolist));
-    parentEl.closest("li").remove();
-  }
 }
 
 // Apply style to list depending on checkbox state
@@ -206,6 +208,20 @@ function taskStateChecker(box) {
   localStorage.setItem("todoDB", JSON.stringify(todolist));
 }
 
+// Delete a single task
+function deleteTask(e) {
+  const confirmation = confirm("Are you sure?");
+  if (confirmation) {
+    const parentEl = e.target.closest(".list-item-content");
+    let parentID = parentEl.getAttribute("id");
+    parentID = parseInt(parentID);
+    todolist = todolist.filter((e) => e.id !== parentID);
+    localStorage.setItem("todoDB", JSON.stringify(todolist));
+    parentEl.closest("li").remove();
+  }
+}
+
+//Delete all tasks on the list
 function deleteAllTasks(confirmed) {
   if (confirmed) {
     todolist = [];
@@ -218,6 +234,7 @@ function deleteAllTasks(confirmed) {
   }
 }
 
+//Delete tasks marked as done
 function deleteDoneTasks(confirmed) {
   if (confirmed) {
     todolist = todolist.filter((item) => !item.done);
@@ -232,14 +249,13 @@ function deleteDoneTasks(confirmed) {
   }
 }
 
-document.getElementById("clearDoneTasks").addEventListener("click", () => {
-  const confirmation = confirm(
-    "Are you sure you want to delete all items marked as done?"
-  );
-  deleteDoneTasks(confirmation);
-});
-
-document.getElementById("clearAllTasks").addEventListener("click", () => {
-  const confirmation = confirm("Are you sure you want to delete all items?");
-  deleteAllTasks(confirmation);
-});
+//Show or(hide) input validation Error
+function validationError(inputField, feedbackForm, show = true) {
+  if (show) {
+    document.querySelector(inputField).classList.add("border-danger");
+    feedbackForm.querySelector(".invalid-feedback").classList.add("d-block");
+  } else {
+    document.querySelector(inputField).classList.remove("border-danger");
+    feedbackForm.querySelector(".invalid-feedback").classList.remove("d-block");
+  }
+}
