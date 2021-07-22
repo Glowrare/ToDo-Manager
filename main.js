@@ -1,5 +1,4 @@
-let localTodoDatabase = [];
-let todolist = localTodoDatabase;
+let todolist = [];
 
 personalizer();
 
@@ -75,7 +74,7 @@ function personalizer() {
   if (todoDB) {
     todoDB = JSON.parse(todoDB);
     if (todoDB.length > 0) {
-      localTodoDatabase = todoDB;
+      todolist = todoDB;
 
       todoDB.forEach((todo) => {
         displayTask(todo, true);
@@ -223,7 +222,7 @@ function deleteTask(e) {
 
 //Delete all tasks on the list
 function deleteAllTasks(confirmed) {
-  if (confirmed) {
+  if (confirmed && todolist.length > 0) {
     todolist = [];
     localStorage.setItem("todoDB", JSON.stringify(todolist));
 
@@ -231,21 +230,26 @@ function deleteAllTasks(confirmed) {
     document.querySelectorAll(".list-item-content").forEach((el) => {
       el.closest("li").remove();
     });
+  } else {
+    alert("Empty list! No item to delete.");
   }
 }
 
 //Delete tasks marked as done
 function deleteDoneTasks(confirmed) {
-  if (confirmed) {
+  const doneTasks = document.querySelectorAll(
+    ".text-decoration-line-through.text-muted"
+  );
+  if (confirmed && doneTasks.length > 0) {
     todolist = todolist.filter((item) => !item.done);
     localStorage.setItem("todoDB", JSON.stringify(todolist));
 
-    //Remove all task from the DOM
-    document
-      .querySelectorAll(".text-decoration-line-through.text-muted")
-      .forEach((el) => {
-        el.remove();
-      });
+    //Remove done task from the DOM
+    doneTasks.forEach((el) => {
+      el.remove();
+    });
+  } else {
+    alert("No item to delete");
   }
 }
 
